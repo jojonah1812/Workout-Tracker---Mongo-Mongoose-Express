@@ -2,7 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path"); 
-const { Workout } = require("./models");
+
+
+// const { Workout } = require("./models");
 
 const PORT = process.env.PORT || 3000;
 const db = require("./models");
@@ -16,19 +18,23 @@ app.use(express.static("public"));
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true, });
 
 //Create Database?
-// db.Workout.create({ name: "Workouts" })
-//   .then(dbWorkout => {
-//     console.log(dbWorkout);
-//   })
-//   .catch(({message}) => {
-//     console.log(message);
-//   });
+app.get("/", (req, res) => {
+  res.send(index.html);
+});
+
+app.get("/exercise", function(req, res) {
+  res.sendFile(path.join( __dirname, "./public/exercise.html"))
+})
+
+app.get("/stats", function(req, res) {
+    res.sendFile(path.join(__dirname, "./public/stats.html"))
+})
 
   //POST-INSERT - A POST route to create a workout
 app.post("/api/workouts", ({ body }, res) => {
   db.Workout.create(body)
       .then(dbWorkout => {
-      res.json(dbWorkout);
+        res.json(dbWorkout);
     })
     .catch(err => {
       res.json(err);
@@ -38,8 +44,8 @@ app.post("/api/workouts", ({ body }, res) => {
 //PUT-UPDATE - A PUT route to update a workout(HINT:you will have to find the workout by id and then push exercises to the exercises array)
 app.put("/api/workouts/:id", (req, res) => {
   db.Workout.findOneAndUpdate({}, { $push: { exercises: _id } }, { new: true })
-    .then(dbUser => {
-      res.json(dbUser);
+    .then(dbWorkout => {
+      res.json(dbWorkout);
     })
     .catch(err => {
       res.json(err);
@@ -54,8 +60,8 @@ app.get("/models/workouts", (req, res) => {
        {
      //adds Duration tolist of fields - as noted as not being listed in the Model.js//
         $addFields: {
-       totalDuration: { $sum: "exercises.$duration" }
-     }
+        totalDuration: { $sum: "exercises.$duration" }
+        }
    }
   ])
     .then(dbWorkout => {
@@ -74,7 +80,7 @@ app.get("/models/workouts", (req, res) => {
  
   // use range as a limit
  
-  app.get("/workouts/range", (req, res) => {
+  app.get("/api/workouts/range", (req, res) => {
     db.Workout.aggregate([
       {
         $addFields:{
@@ -97,7 +103,7 @@ app.get("/models/workouts", (req, res) => {
 
 // Reference: https://kb.objectrocket.com/mongo-db/how-to-delete-documents-with-mongoose-235
 
-Workout.findOneAndDelete(
+db.Workout.findOneAndDelete(
   { _id: "6035819e069dac799094fff8" },
   function (err) {
     if (err) console.log(err);
