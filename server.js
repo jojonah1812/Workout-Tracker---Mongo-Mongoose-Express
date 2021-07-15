@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path"); 
+const { Workout } = require("./models");
 
 const PORT = process.env.PORT || 3000;
 const db = require("./models");
@@ -94,15 +95,15 @@ app.get("/models/workouts", (req, res) => {
 // DELETE ROUTE NEEDED - A DELETE route to delete a workout by a specific id
 // Note from Aidan TA: "_id": "6035819e069dac799094fff8",
 
-ProductModel.findOneAndDelete(
+// Reference: https://kb.objectrocket.com/mongo-db/how-to-delete-documents-with-mongoose-235
+
+Workout.findOneAndDelete(
   { _id: "6035819e069dac799094fff8" },
   function (err) {
     if (err) console.log(err);
     console.log("Successful deletion");
   }
 );
-
-
 
 
 app.listen(3000, () => {
