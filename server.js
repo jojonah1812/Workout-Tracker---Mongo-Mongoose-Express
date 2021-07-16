@@ -16,8 +16,7 @@ app.use(express.static("public"));
 //connection: if no MONGODB_URI, it will go Local
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true, useFindAndModify: false});
 
-app.use(required("./routes/api.js"));
-app.use(required("./routes/view.js"));
+
 
 
 
