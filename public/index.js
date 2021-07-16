@@ -1,6 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-const mongoose = require ("express")
-const mongoose = require ("mongojs")
 init();
 
 async function init() {

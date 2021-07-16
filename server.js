@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
 
 //Create Database?
 app.get("/", (req, res) => {
-  res.send(index.html);
+  res.sendFile(path.join(__dirname, "./public/exercise.html"));
 });
 
 app.get("/exercise", function(req, res) {
@@ -32,37 +32,45 @@ app.get("/stats", function(req, res) {
 
   //POST-INSERT - A POST route to create a workout
 app.post("/api/workouts", ({ body }, res) => {
-  db.Workout.create(body)
-      .then(dbWorkout => {
-        res.json(dbWorkout);
+  db.Workout.create({})
+    .then((newWorkout) => {
+      console.log(newWorkout);
+      res.json(newWorkout);
     })
-    .catch(err => {
+    .catch((err) => {
       res.json(err);
     });
 });
 
 //PUT-UPDATE - A PUT route to update a workout(HINT:you will have to find the workout by id and then push exercises to the exercises array)
 app.put("/api/workouts/:id", (req, res) => {
-  db.Workout.findOneAndUpdate({}, { $push: { exercises: _id } }, { new: true })
-    .then(dbWorkout => {
-      res.json(dbWorkout);
-    })
-    .catch(err => {
+  db.Workout.findOneAndUpdate(
+    { _id: req.params.id },
+
+    { 
+      $push: { exercises: req.body },
+    },
+    { new: true })
+
+  .then(dbWorkout => {
+      res.json(dbWorkout)
+  })
+  .catch((err) => {
       res.json(err);
     })
-  });
+  })
 
 
 //GET - A GET route to get the workouts(HINT: this will need an aggregate to add all the durations from each exercise together. Here is an example https://docs.mongodb.com/manual/reference/operator/aggregation/addFields/)
-app.get("/models/workouts", (req, res) => {
+app.get("/api/workouts", (req, res) => {
 
     db.Workout.aggregate([
        {
      //adds Duration tolist of fields - as noted as not being listed in the Model.js//
         $addFields: {
-        totalDuration: { $sum: "exercises.$duration" }
+        totalDuration: { $sum: "$exercises.$duration" }
         }
-   }
+      }
   ])
     .then(dbWorkout => {
       res.json(dbWorkout);
@@ -84,13 +92,13 @@ app.get("/models/workouts", (req, res) => {
     db.Workout.aggregate([
       {
         $addFields:{
-            totalDuration: {$sum: "exercises.duration"}
+            totalDuration: {$sum: "$exercises.duration"}
         }
       }
     ])
-    .limit(5)
-    .then(dbWorkout => {
-      res.json(dbWorkout);
+    .limit(7)
+    .then(newWorkout => {
+      res.json(newWorkout);
     })
     .catch(err => {
         res.json(err);
