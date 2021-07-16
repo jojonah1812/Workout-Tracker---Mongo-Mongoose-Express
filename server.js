@@ -23,7 +23,7 @@ app.use(required("./routes/view.js"));
 
 
 
-//Create Database?
+//Create 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/exercise.html"));
 });
