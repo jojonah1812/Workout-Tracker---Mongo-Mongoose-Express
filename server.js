@@ -120,7 +120,7 @@ db.Workout.findOneAndDelete(
   { _id: "6035819e069dac799094fff8" },
   function (err) {
     if (err) console.log(err);
-    console.log("Successful deletion");
+    // console.log("Successful deletion");
   }
 );
 
