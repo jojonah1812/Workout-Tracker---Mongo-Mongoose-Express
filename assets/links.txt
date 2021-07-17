@@ -1,0 +1,11 @@
+mongodb+srv://suddenDonkey:<password>@clusterbarn.mkbfj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+Mongodb URL to connect to this production database:
+mongodb+srv://suddenDonkey:dpassword@clusterbarn.mkbfj.mongodb.net/workout?retryWrites=true&w=majority
+
+https://immense-beach-32612.herokuapp.com/stats
+
+https://jojonah1812.github.io/Workout-Tracker---Mongo-Mongoose-Express/
+
+https://github.com/jojonah1812/Workout-Tracker---Mongo-Mongoose-Express
+
