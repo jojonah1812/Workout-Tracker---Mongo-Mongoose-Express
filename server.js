@@ -36,7 +36,7 @@ app.get("/stats", function(req, res) {
 })
 
   //POST-INSERT - A POST route to create a workout
-app.post("/api/workouts", ({ body }, res) => {
+app.post("/api/workouts", (req, res) => {
   db.Workout.create({})
     .then((newWorkout) => {
       console.log(newWorkout);
@@ -71,7 +71,7 @@ app.get("/api/workouts", (req, res) => {
 
     db.Workout.aggregate([
        {
-     //adds Duration tolist of fields - as noted as not being listed in the Model.js//
+     //adds Duration to list of fields - as noted as not being listed in the Model.js//
         $addFields: {
         totalDuration: { $sum: "$exercises.$duration" }
         }

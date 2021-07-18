@@ -3,7 +3,7 @@
 ### Designer Name
 * Jonah Haase
 ## Project Description
-
+* Ther goal of this project was to create a workout tracker that uses Mongo to create a database with a Mongoose schema and handle routes with Express.
 * User Story: As a user, I want to be able to view create and track daily workouts. I want to be able to log multiple exercises in a workout on a given day. I should also be able to track the name, type, weight, sets, reps, and duration of exercise. If the exercise is a cardio exercise, I should be able to track my distance traveled.
 
 # Table of Contents
@@ -22,9 +22,6 @@
 
 ## Project Installation
 * NPMs and Tools: dotenv, express, mongoose, morgan, MongoAtlas, Heroku.
-
-## License
-* MIT
 
 ## Questions
 If you have any questions, please feel free to contact me through my GitHub account or my email address.
