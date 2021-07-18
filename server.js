@@ -16,12 +16,6 @@ app.use(express.static("public"));
 //connection: if no MONGODB_URI, it will go Local
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true, useFindAndModify: false});
 
-
-
-
-
-
-
 //Create 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/exercise.html"));
@@ -50,12 +44,15 @@ app.post("/api/workouts", (req, res) => {
 //PUT-UPDATE - A PUT route to update a workout(HINT:you will have to find the workout by id and then push exercises to the exercises array)
 app.put("/api/workouts/:id", (req, res) => {
   db.Workout.findOneAndUpdate(
-    { _id: req.params.id },
-
+    {
+      _id: req.params.id 
+    },
     { 
       $push: { exercises: req.body },
     },
-    { new: true })
+    {
+       new: true
+    })
 
   .then(dbWorkout => {
       res.json(dbWorkout)
@@ -87,12 +84,6 @@ app.get("/api/workouts", (req, res) => {
   
   //GET - A GET route to get workouts in a specific range(HINT:very similar to the one above, but needs a limit. Here is an exampe https://kb.objectrocket.com/mongo-db/how-to-use-the-mongoose-limit-function-927)
 
-  //  -add aggregate
-  //  -add limit
-  //  -add closing error catches
- 
-  // use range as a limit
- 
   app.get("/api/workouts/range", (req, res) => {
     db.Workout.aggregate([
       {
@@ -110,10 +101,8 @@ app.get("/api/workouts", (req, res) => {
     })
   });
 
-//////////////////////
-// DELETE ROUTE NEEDED - A DELETE route to delete a workout by a specific id
+// DELETE ROUTE - A DELETE route to delete a workout by a specific id
 // Note from Aidan TA: "_id": "6035819e069dac799094fff8",
-
 // Reference: https://kb.objectrocket.com/mongo-db/how-to-delete-documents-with-mongoose-235
 
 db.Workout.findOneAndDelete(
@@ -123,7 +112,6 @@ db.Workout.findOneAndDelete(
     // console.log("Successful deletion");
   }
 );
-
 
 app.listen(PORT, () => {
   console.log("App running on port 3000!");
