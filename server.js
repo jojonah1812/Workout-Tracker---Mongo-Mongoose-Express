@@ -5,7 +5,7 @@ const path = require("path");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
-const db = require("./modelss");
+const db = require("./models");
 const app = express();
 
 app.use(logger("dev"));
@@ -68,7 +68,7 @@ app.get("/api/workouts", (req, res) => {
 
     db.Workout.aggregate([
        {
-     //adds Duration to list of fields - as noted as not being listed in the Model.js//
+     //adds Duration to list of fields - as noted as not being listed in the model.js//
         $addFields: {
         totalDuration: { $sum: "$exercises.$duration" }
         }
